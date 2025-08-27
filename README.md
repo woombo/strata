@@ -11,6 +11,38 @@ A Drupal 11 website with entities defined in code and managed via Composer.
 
 ## Installation
 
+### Option 1: Lando Development Environment (Recommended)
+
+1. **Prerequisites:**
+   - Install [Lando](https://docs.lando.dev/getting-started/installation.html)
+   - Install [Docker](https://docs.docker.com/get-docker/)
+
+2. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd strata
+   ```
+
+3. **Quick setup with Lando:**
+   ```bash
+   chmod +x scripts/lando-setup.sh
+   ./scripts/lando-setup.sh
+   ```
+
+4. **Manual Lando setup:**
+   ```bash
+   lando start
+   lando install-site
+   lando enable-modules
+   ```
+
+5. **Access your site:**
+   - **Website:** https://strata.lndo.site
+   - **MailHog:** https://mail.strata.lndo.site  
+   - **Admin:** Username: `admin`, Password: `admin`
+
+### Option 2: Traditional Local Development
+
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
@@ -37,7 +69,7 @@ A Drupal 11 website with entities defined in code and managed via Composer.
    ```
 
 5. **Configure local development:**
-   - Copy `web/sites/default/settings.local.php` and update database credentials if needed
+   - The database settings automatically detect Lando environment
    - The configuration management is set up to use `config/sync` directory
 
 ## Development Setup
@@ -71,6 +103,44 @@ All custom entities should be defined in code using:
 ```
 
 ### Useful Commands
+
+#### Lando Commands (Recommended)
+
+```bash
+# Lando environment management
+lando start                    # Start the development environment
+lando stop                     # Stop the development environment
+lando restart                  # Restart the development environment
+lando destroy                  # Destroy the development environment
+
+# Drupal site management
+lando install-site            # Install fresh Drupal site
+lando enable-modules          # Enable custom Strata modules
+lando drush uli               # Get admin login link
+lando drush status            # Check Drupal status
+
+# Configuration management
+lando config-export           # Export site configuration
+lando config-import           # Import site configuration
+lando cc                      # Clear all caches
+
+# Development tools
+lando composer require drupal/module_name  # Install new modules
+lando composer update                      # Update dependencies
+lando phpcs                                # Run code sniffer
+lando phpcbf                              # Fix code style issues
+lando phpstan                             # Run static analysis
+
+# Database operations
+lando db-export               # Export database
+lando db-import dump.sql      # Import database
+lando ssh                     # SSH into app container
+
+# Mail testing
+# MailHog available at: https://mail.strata.lndo.site
+```
+
+#### Traditional Commands
 
 ```bash
 # Install new modules

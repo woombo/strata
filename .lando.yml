@@ -1,0 +1,166 @@
+# Lando configuration for Strata Drupal 11 website
+name: strata-drupal
+recipe: drupal11
+
+config:
+  # Drupal 11 requires PHP 8.1+
+  php: '8.3'
+  # Use MariaDB for better performance
+  database: mariadb:10.6
+  # Set the webroot to the Drupal docroot
+  webroot: web
+  # Composer configuration
+  composer_version: '2-latest'
+
+# Additional services
+services:
+  # Override appserver to add development tools
+  appserver:
+    type: php:8.3
+    via: apache:2.4
+    webroot: web
+    # Install additional PHP extensions
+    build_as_root:
+      - apt-get update -y
+      - apt-get install -y vim nano git
+    # Install development tools via Composer
+    build:
+      - composer install
+    # Custom PHP configuration
+    config:
+      php: .lando/php.ini
+
+  # Database service
+  database:
+    type: mariadb:10.6
+    # Custom MariaDB configuration
+    config:
+      database: .lando/my.cnf
+    # Set up the database
+    creds:
+      user: drupal
+      password: drupal
+      database: strata_drupal
+
+  # Mail service for development
+  mailhog:
+    type: mailhog
+    portforward: true
+    hogfrom:
+      - appserver
+
+  # Node service for front-end development
+  node:
+    type: node:18
+    globals:
+      - gulp-cli
+      - yarn
+
+# Tooling commands
+tooling:
+  # Drush commands
+  drush:
+    service: appserver
+    description: 'Run Drush commands'
+    cmd: /app/vendor/bin/drush
+
+  # Drupal Console (if needed)
+  drupal:
+    service: appserver
+    description: 'Run Drupal Console commands'
+    cmd: /app/vendor/bin/drupal
+
+  # Composer commands
+  composer:
+    service: appserver
+    description: 'Run Composer commands'
+
+  # Database import/export
+  db-import:
+    service: database
+    description: 'Import database dump'
+
+  db-export:
+    service: database
+    description: 'Export database'
+
+  # Custom commands
+  install-site:
+    service: appserver
+    description: 'Install Drupal site'
+    cmd:
+      - drush si standard --db-url=mysql://drupal:drupal@database/strata_drupal --site-name="Strata Drupal Site" --account-name=admin --account-pass=admin --yes
+      - drush en strata_roles strata_tickets -y
+      - drush cr
+
+  # Enable modules
+  enable-modules:
+    service: appserver
+    description: 'Enable custom Strata modules'
+    cmd:
+      - drush en strata_roles strata_tickets -y
+      - drush cr
+
+  # Export configuration
+  config-export:
+    service: appserver  
+    description: 'Export Drupal configuration'
+    cmd: drush cex -y
+
+  # Import configuration
+  config-import:
+    service: appserver
+    description: 'Import Drupal configuration'
+    cmd: drush cim -y
+
+  # Clear cache
+  cc:
+    service: appserver
+    description: 'Clear Drupal caches'
+    cmd: drush cr
+
+  # Run PHP CodeSniffer
+  phpcs:
+    service: appserver
+    description: 'Run PHP CodeSniffer'
+    cmd: /app/vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
+
+  # Fix PHP CodeSniffer issues
+  phpcbf:
+    service: appserver
+    description: 'Fix PHP CodeSniffer issues'
+    cmd: /app/vendor/bin/phpcbf --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml
+
+  # Run PHPStan
+  phpstan:
+    service: appserver
+    description: 'Run PHPStan static analysis'
+    cmd: /app/vendor/bin/phpstan analyse
+
+  # Generate sample data
+  generate-content:
+    service: appserver
+    description: 'Generate sample ticket content'
+    cmd:
+      - drush genc 10 --types=article
+      - echo "Sample content generated"
+
+# Proxy configuration
+proxy:
+  appserver:
+    - strata.lndo.site
+    - strata-drupal.lndo.site
+  mailhog:
+    - mail.strata.lndo.site
+
+# Events
+events:
+  # Run after lando start
+  post-start:
+    - appserver: echo "Strata Drupal site started at https://strata.lndo.site"
+    - appserver: echo "MailHog available at https://mail.strata.lndo.site"
+
+# Environment variables
+env:
+  DRUPAL_HASH_SALT: 'random-hash-salt-for-development'
+  ENVIRONMENT: 'local'

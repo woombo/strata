@@ -1,0 +1,21 @@
+# Docker Compose override for additional development services
+# This file is automatically used by Lando
+
+version: '3'
+
+services:
+  # Additional development tools can be added here
+  # Example: Redis for caching
+  # redis:
+  #   image: redis:6-alpine
+  #   ports:
+  #     - "6379"
+
+  # Example: Elasticsearch for search
+  # elasticsearch:
+  #   image: elasticsearch:7.15.2
+  #   environment:
+  #     - discovery.type=single-node
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #   ports:
+  #     - "9200"
