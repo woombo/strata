@@ -1,0 +1,62 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the strata_roles module.
+ */
+
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function strata_roles_install() {
+  // Set messages for successful role creation
+  $roles_created = [
+    'strata_admin' => 'Strata Admin',
+    'strata_manager' => 'Strata Manager',
+    'strata_council' => 'Strata Council',
+    'strata_resident' => 'Strata Resident',
+    'strata_staff' => 'Strata Staff',
+  ];
+
+  foreach ($roles_created as $role_id => $role_label) {
+    if (Role::load($role_id)) {
+      \Drupal::messenger()->addMessage(
+        t('Role "@role" has been created successfully.', ['@role' => $role_label])
+      );
+    }
+  }
+
+  \Drupal::messenger()->addMessage(
+    t('Strata Roles module has been installed. All strata-specific roles and permissions have been configured.')
+  );
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function strata_roles_uninstall() {
+  // Define roles to be removed
+  $roles_to_remove = [
+    'strata_admin',
+    'strata_manager', 
+    'strata_council',
+    'strata_resident',
+    'strata_staff',
+  ];
+
+  foreach ($roles_to_remove as $role_id) {
+    $role = Role::load($role_id);
+    if ($role) {
+      $role->delete();
+      \Drupal::messenger()->addMessage(
+        t('Role "@role" has been removed.', ['@role' => $role->label()])
+      );
+    }
+  }
+
+  \Drupal::messenger()->addMessage(
+    t('Strata Roles module has been uninstalled. All strata-specific roles have been removed.')
+  );
+}

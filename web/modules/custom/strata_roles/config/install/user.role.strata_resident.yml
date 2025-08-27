@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies: {  }
+id: strata_resident
+label: 'Strata Resident'
+weight: -2
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access user profiles'
+  - 'create content'
+  - 'delete own content'
+  - 'edit own content'
+  - 'use text format restricted_html'
+  - 'view published content'
+  - 'access strata dashboard'
+  - 'view building documents'
+  - 'submit maintenance request'

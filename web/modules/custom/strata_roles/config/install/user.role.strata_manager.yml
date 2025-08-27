@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies: {  }
+id: strata_manager
+label: 'Strata Manager'
+weight: -6
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'create content'
+  - 'delete own content'
+  - 'edit any content'
+  - 'edit own content'
+  - 'use text format basic_html'
+  - 'view the administration theme'
+  - 'administer menu'
+  - 'administer taxonomy'
+  - 'access site reports'
+  - 'manage strata building'
+  - 'manage strata finances'
+  - 'manage strata maintenance'
+  - 'view strata reports'
+  - 'manage strata meetings'
+  - 'access strata dashboard'
+  - 'manage resident communications'
+  - 'manage building documents'
+  - 'view building documents'
+  - 'submit maintenance request'

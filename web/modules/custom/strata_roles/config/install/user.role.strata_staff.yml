@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+id: strata_staff
+label: 'Strata Staff'
+weight: -3
+is_admin: false
+permissions:
+  - 'access content overview'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'create content'
+  - 'delete own content'
+  - 'edit own content'
+  - 'use text format basic_html'
+  - 'view published content'
+  - 'manage strata maintenance'
+  - 'access strata dashboard'
+  - 'view building documents'
+  - 'submit maintenance request'
+  - 'view strata reports'

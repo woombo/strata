@@ -1,0 +1,43 @@
+# Custom permissions for Strata roles module
+
+manage strata building:
+  title: 'Manage building information'
+  description: 'Access to manage building details, common areas, and facilities'
+  restrict access: true
+
+manage strata finances:
+  title: 'Manage strata finances'
+  description: 'Access to financial reports, budgets, and payment management'
+  restrict access: true
+
+manage strata maintenance:
+  title: 'Manage maintenance requests'
+  description: 'Create, update, and manage maintenance requests and work orders'
+
+view strata reports:
+  title: 'View strata reports'
+  description: 'Access to view various strata management reports'
+
+manage strata meetings:
+  title: 'Manage strata meetings'
+  description: 'Create and manage AGM and committee meetings'
+
+access strata dashboard:
+  title: 'Access strata dashboard'
+  description: 'Access to the main strata management dashboard'
+
+manage resident communications:
+  title: 'Manage resident communications'
+  description: 'Send notices and manage communication with residents'
+
+view building documents:
+  title: 'View building documents'
+  description: 'Access to view building-related documents and bylaws'
+
+manage building documents:
+  title: 'Manage building documents'
+  description: 'Upload and manage building-related documents and bylaws'
+
+submit maintenance request:
+  title: 'Submit maintenance request'
+  description: 'Submit maintenance requests for common areas or units'

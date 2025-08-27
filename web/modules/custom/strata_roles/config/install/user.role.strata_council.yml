@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies: {  }
+id: strata_council
+label: 'Strata Council'
+weight: -4
+is_admin: false
+permissions:
+  - 'access content overview'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'create content'
+  - 'delete own content'
+  - 'edit own content'
+  - 'use text format basic_html'
+  - 'view published content'
+  - 'manage strata meetings'
+  - 'view strata reports'
+  - 'access strata dashboard'
+  - 'view building documents'
+  - 'submit maintenance request'
+  - 'manage resident communications'

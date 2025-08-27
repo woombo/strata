@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies: {  }
+id: strata_admin
+label: 'Strata Admin'
+weight: -8
+is_admin: true
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access site in maintenance mode'
+  - 'access site reports'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'administer account settings'
+  - 'administer blocks'
+  - 'administer content types'
+  - 'administer menu'
+  - 'administer modules'
+  - 'administer permissions'
+  - 'administer site configuration'
+  - 'administer taxonomy'
+  - 'administer themes'
+  - 'administer url aliases'
+  - 'administer users'
+  - 'bypass node access'
+  - 'create content'
+  - 'delete any content'
+  - 'delete own content'
+  - 'edit any content'
+  - 'edit own content'
+  - 'use text format full_html'
+  - 'view the administration theme'
+  - 'manage strata building'
+  - 'manage strata finances'
+  - 'manage strata maintenance'
+  - 'view strata reports'
+  - 'manage strata meetings'
+  - 'access strata dashboard'
+  - 'manage resident communications'
+  - 'manage building documents'
+  - 'view building documents'
+  - 'submit maintenance request'

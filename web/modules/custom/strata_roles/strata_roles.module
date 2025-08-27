@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * @file
+ * Strata Roles module for managing strata-specific user roles and permissions.
+ */
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_help().
+ */
+function strata_roles_help($route_name) {
+  switch ($route_name) {
+    case 'help.page.strata_roles':
+      return '<p>' . t('This module provides roles and permissions specific to strata community management.') . '</p>';
+  }
+}
+
+/**
+ * Helper function to check if user has any strata role.
+ */
+function strata_roles_user_has_strata_role(AccountInterface $account) {
+  $strata_roles = [
+    'strata_admin',
+    'strata_manager',
+    'strata_council', 
+    'strata_resident',
+    'strata_staff',
+  ];
+
+  foreach ($strata_roles as $role) {
+    if ($account->hasRole($role)) {
+      return TRUE;
+    }
+  }
+  
+  return FALSE;
+}
+
+/**
+ * Helper function to get user's primary strata role.
+ */
+function strata_roles_get_primary_role(AccountInterface $account) {
+  // Role hierarchy (highest to lowest priority)
+  $role_hierarchy = [
+    'strata_admin' => 'Admin',
+    'strata_manager' => 'Manager',
+    'strata_council' => 'Council Member',
+    'strata_staff' => 'Staff',
+    'strata_resident' => 'Resident',
+  ];
+
+  foreach ($role_hierarchy as $role_id => $role_label) {
+    if ($account->hasRole($role_id)) {
+      return [
+        'id' => $role_id,
+        'label' => $role_label,
+      ];
+    }
+  }
+
+  return NULL;
+}
+
+/**
+ * Implements hook_user_presave().
+ */
+function strata_roles_user_presave(UserInterface $user) {
+  // Ensure only one primary strata role per user
+  $strata_roles = [
+    'strata_admin',
+    'strata_manager', 
+    'strata_council',
+    'strata_staff',
+    'strata_resident',
+  ];
+
+  $user_strata_roles = [];
+  foreach ($strata_roles as $role) {
+    if ($user->hasRole($role)) {
+      $user_strata_roles[] = $role;
+    }
+  }
+
+  // If user has multiple strata roles, keep only the highest priority one
+  if (count($user_strata_roles) > 1) {
+    // Remove all strata roles first
+    foreach ($user_strata_roles as $role) {
+      $user->removeRole($role);
+    }
+    
+    // Add back the highest priority role
+    $user->addRole($user_strata_roles[0]);
+  }
+}
