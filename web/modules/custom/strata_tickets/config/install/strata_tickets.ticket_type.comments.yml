@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: comments
+label: Comments
+description: 'Ticket type for general comments, feedback, suggestions, or community discussions'
+uuid: null

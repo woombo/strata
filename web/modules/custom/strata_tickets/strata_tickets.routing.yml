@@ -1,0 +1,126 @@
+# Ticket entity routes
+
+entity.ticket.canonical:
+  path: '/ticket/{ticket}'
+  defaults:
+    _entity_view: 'ticket'
+    _title_callback: '\Drupal\strata_tickets\Controller\TicketController::title'
+  requirements:
+    _entity_access: 'ticket.view'
+  options:
+    parameters:
+      ticket:
+        type: entity:ticket
+
+entity.ticket.add_page:
+  path: '/ticket/add'
+  defaults:
+    _controller: '\Drupal\strata_tickets\Controller\TicketController::addPage'
+    _title: 'Add Ticket'
+  requirements:
+    _entity_create_access: 'ticket'
+
+entity.ticket.add_form:
+  path: '/ticket/add/{ticket_type}'
+  defaults:
+    _entity_form: ticket.add
+    _title_callback: '\Drupal\strata_tickets\Controller\TicketController::addFormTitle'
+  requirements:
+    _entity_create_access: 'ticket:{ticket_type}'
+  options:
+    parameters:
+      ticket_type:
+        type: entity:ticket_type
+
+entity.ticket.edit_form:
+  path: '/ticket/{ticket}/edit'
+  defaults:
+    _entity_form: ticket.edit
+    _title_callback: '\Drupal\strata_tickets\Controller\TicketController::title'
+  requirements:
+    _entity_access: 'ticket.update'
+  options:
+    parameters:
+      ticket:
+        type: entity:ticket
+
+entity.ticket.delete_form:
+  path: '/ticket/{ticket}/delete'
+  defaults:
+    _entity_form: ticket.delete
+    _title_callback: '\Drupal\strata_tickets\Controller\TicketController::title'
+  requirements:
+    _entity_access: 'ticket.delete'
+  options:
+    parameters:
+      ticket:
+        type: entity:ticket
+
+entity.ticket.collection:
+  path: '/admin/content/tickets'
+  defaults:
+    _entity_list: 'ticket'
+    _title: 'Tickets'
+  requirements:
+    _permission: 'view published ticket entities'
+
+# Ticket Type entity routes
+
+entity.ticket_type.canonical:
+  path: '/admin/structure/ticket_type/{ticket_type}'
+  defaults:
+    _entity_view: 'ticket_type'
+    _title_callback: '\Drupal\strata_tickets\Controller\TicketTypeController::title'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+    parameters:
+      ticket_type:
+        type: entity:ticket_type
+
+entity.ticket_type.add_form:
+  path: '/admin/structure/ticket_type/add'
+  defaults:
+    _entity_form: ticket_type.add
+    _title: 'Add Ticket type'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+
+entity.ticket_type.edit_form:
+  path: '/admin/structure/ticket_type/{ticket_type}/edit'
+  defaults:
+    _entity_form: ticket_type.edit
+    _title_callback: '\Drupal\strata_tickets\Controller\TicketTypeController::title'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+    parameters:
+      ticket_type:
+        type: entity:ticket_type
+
+entity.ticket_type.delete_form:
+  path: '/admin/structure/ticket_type/{ticket_type}/delete'
+  defaults:
+    _entity_form: ticket_type.delete
+    _title_callback: '\Drupal\strata_tickets\Controller\TicketTypeController::title'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+    parameters:
+      ticket_type:
+        type: entity:ticket_type
+
+entity.ticket_type.collection:
+  path: '/admin/structure/ticket_type'
+  defaults:
+    _entity_list: 'ticket_type'
+    _title: 'Ticket types'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

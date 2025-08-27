@@ -1,0 +1,18 @@
+# Schema for Strata Tickets module
+
+strata_tickets.ticket_type.*:
+  type: config_entity
+  label: 'Ticket type'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    description:
+      type: text
+      label: 'Description'
+    uuid:
+      type: string
+      label: 'UUID'

@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - strata_tickets
+id: ticket.field_category
+field_name: field_category
+entity_type: ticket
+type: list_string
+settings:
+  allowed_values:
+    - label: 'Maintenance'
+    - label: 'Noise'
+    - label: 'Parking'
+    - label: 'Security'
+    - label: 'Cleanliness'
+    - label: 'Common Areas'
+    - label: 'Building Facilities'
+    - label: 'Bylaw Violation'
+    - label: 'Plumbing'
+    - label: 'Electrical'
+    - label: 'HVAC'
+    - label: 'Landscaping'
+    - label: 'Other'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

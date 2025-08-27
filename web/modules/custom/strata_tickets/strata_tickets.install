@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the strata_tickets module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function strata_tickets_install() {
+  \Drupal::messenger()->addMessage(
+    t('Strata Tickets module has been installed. Ticket entity with three bundles (Complain, Request, Comments) has been created.')
+  );
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function strata_tickets_uninstall() {
+  // Delete all ticket entities when module is uninstalled
+  $entity_type_manager = \Drupal::entityTypeManager();
+  
+  // Get all ticket entities
+  $ticket_storage = $entity_type_manager->getStorage('ticket');
+  $tickets = $ticket_storage->loadMultiple();
+  
+  if (!empty($tickets)) {
+    $ticket_storage->delete($tickets);
+    \Drupal::messenger()->addMessage(
+      t('All ticket entities have been deleted.')
+    );
+  }
+
+  \Drupal::messenger()->addMessage(
+    t('Strata Tickets module has been uninstalled.')
+  );
+}

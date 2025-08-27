@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Contains strata_tickets.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function strata_tickets_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the strata_tickets module.
+    case 'help.page.strata_tickets':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Strata Tickets module provides a comprehensive ticketing system for strata community management.') . '</p>';
+      $output .= '<h3>' . t('Uses') . '</h3>';
+      $output .= '<dl>';
+      $output .= '<dt>' . t('Managing Tickets') . '</dt>';
+      $output .= '<dd>' . t('Create and manage tickets with three different types: Complaints for issues and concerns, Requests for maintenance and services, and Comments for general feedback and discussions.') . '</dd>';
+      $output .= '<dt>' . t('Ticket Types') . '</dt>';
+      $output .= '<dd>' . t('Complain: For resident complaints about building issues, noise, violations, or other concerns.') . '</dd>';
+      $output .= '<dd>' . t('Request: For resident requests including maintenance, improvements, or service requests.') . '</dd>';
+      $output .= '<dd>' . t('Comments: For general comments, feedback, suggestions, or community discussions.') . '</dd>';
+      $output .= '</dl>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function strata_tickets_theme() {
+  return [
+    'ticket' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for Ticket templates.
+ *
+ * Default template: ticket.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the user information and any
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_ticket(array &$variables) {
+  // Fetch Ticket Entity Object.
+  $ticket = $variables['elements']['#ticket'];
+
+  // Helpful $content variable for templates.
+  foreach (\Drupal\Core\Render\Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}

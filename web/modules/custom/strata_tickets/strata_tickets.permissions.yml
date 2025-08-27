@@ -1,0 +1,55 @@
+# Permissions for Strata Tickets module
+
+administer ticket entities:
+  title: 'Administer tickets'
+  description: 'Allow to access the administration form to configure Ticket entities.'
+  restrict access: true
+
+create ticket entities:
+  title: 'Create new ticket entities'
+  description: 'Allow users to create new ticket entities.'
+
+view published ticket entities:
+  title: 'View published tickets'
+  description: 'Allow users to view published ticket entities.'
+
+view own ticket entities:
+  title: 'View own tickets'
+  description: 'Allow users to view their own ticket entities.'
+
+view unpublished ticket entities:
+  title: 'View unpublished tickets'
+  description: 'Allow users to view unpublished ticket entities.'
+  restrict access: true
+
+edit any ticket entities:
+  title: 'Edit any tickets'
+  description: 'Allow users to edit any ticket entities.'
+  restrict access: true
+
+edit own ticket entities:
+  title: 'Edit own tickets'
+  description: 'Allow users to edit their own ticket entities.'
+
+delete any ticket entities:
+  title: 'Delete any tickets'
+  description: 'Allow users to delete any ticket entities.'
+  restrict access: true
+
+delete own ticket entities:
+  title: 'Delete own tickets'
+  description: 'Allow users to delete their own ticket entities.'
+
+# Bundle specific permissions
+
+create complain ticket entities:
+  title: 'Create complaint tickets'
+  description: 'Allow users to create complaint ticket entities.'
+
+create request ticket entities:
+  title: 'Create request tickets'
+  description: 'Allow users to create request ticket entities.'
+
+create comments ticket entities:
+  title: 'Create comment tickets'
+  description: 'Allow users to create comment ticket entities.'

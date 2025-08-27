@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.ticket.field_category
+    - strata_tickets.ticket_type.complain
+id: ticket.complain.field_category
+field_name: field_category
+entity_type: ticket
+bundle: complain
+label: Category
+description: 'Select the category that best describes your complaint'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

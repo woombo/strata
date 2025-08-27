@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.ticket.field_location
+    - strata_tickets.ticket_type.request
+id: ticket.request.field_location
+field_name: field_location
+entity_type: ticket
+bundle: request
+label: Location
+description: 'Specify the location for this request (e.g., Unit 123, Common Area, Elevator)'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

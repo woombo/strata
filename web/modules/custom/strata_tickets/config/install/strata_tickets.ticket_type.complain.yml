@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: complain
+label: Complain
+description: 'Ticket type for resident complaints about building issues, noise, violations, or other concerns'
+uuid: null

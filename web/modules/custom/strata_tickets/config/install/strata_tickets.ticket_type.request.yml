@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: request
+label: Request
+description: 'Ticket type for resident requests including maintenance, improvements, or service requests'
+uuid: null
