@@ -1,0 +1,2 @@
+# This file ensures the configuration sync directory is tracked in git
+# Drupal configuration files will be exported here
