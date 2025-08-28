@@ -1,0 +1,86 @@
+# Schema for Strata Base module configurations
+
+strata_base.building_info:
+  type: config_object
+  label: 'Building Information'
+  mapping:
+    name:
+      type: string
+      label: 'Building Name'
+    address:
+      type: string
+      label: 'Address'
+    city:
+      type: string
+      label: 'City'
+    postal_code:
+      type: string
+      label: 'Postal Code'
+    province:
+      type: string
+      label: 'Province/State'
+    country:
+      type: string
+      label: 'Country'
+    total_units:
+      type: integer
+      label: 'Total Units'
+    floors:
+      type: integer
+      label: 'Number of Floors'
+    built_year:
+      type: integer
+      label: 'Year Built'
+    property_manager:
+      type: string
+      label: 'Property Manager'
+    emergency_contact:
+      type: string
+      label: 'Emergency Contact'
+
+strata_base.settings:
+  type: config_object
+  label: 'Strata Base Settings'
+  mapping:
+    timezone:
+      type: string
+      label: 'Timezone'
+    date_format:
+      type: string
+      label: 'Date Format'
+    enable_logging:
+      type: boolean
+      label: 'Enable Logging'
+    enable_notifications:
+      type: boolean
+      label: 'Enable Notifications'
+    maintenance_mode:
+      type: boolean
+      label: 'Maintenance Mode'
+    dashboard_refresh_interval:
+      type: integer
+      label: 'Dashboard Refresh Interval'
+    show_statistics:
+      type: boolean
+      label: 'Show Statistics'
+    show_recent_activity:
+      type: boolean
+      label: 'Show Recent Activity'
+    enable_email_notifications:
+      type: boolean
+      label: 'Enable Email Notifications'
+    admin_email:
+      type: string
+      label: 'Admin Email'
+    notification_sender:
+      type: string
+      label: 'Notification Sender'
+    session_timeout:
+      type: integer
+      label: 'Session Timeout'
+    max_login_attempts:
+      type: integer
+      label: 'Max Login Attempts'
+    lockout_duration:
+      type: integer
+      label: 'Lockout Duration'

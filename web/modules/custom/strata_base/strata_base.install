@@ -1,0 +1,129 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the strata_base module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function strata_base_install() {
+  // Initialize building statistics
+  $state = \Drupal::state();
+  $state->setMultiple([
+    'strata_base.stats.active_residents' => 0,
+    'strata_base.stats.pending_tickets' => 0,
+    'strata_base.stats.maintenance_requests' => 0,
+    'strata_base.stats.last_updated' => time(),
+  ]);
+
+  \Drupal::messenger()->addMessage(
+    t('Strata Base module has been installed. Common services and utilities are now available for all Strata modules.')
+  );
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function strata_base_uninstall() {
+  // Clean up state variables
+  $state = \Drupal::state();
+  
+  $state_keys = [
+    'strata_base.stats.active_residents',
+    'strata_base.stats.pending_tickets',
+    'strata_base.stats.maintenance_requests',
+    'strata_base.stats.last_updated',
+  ];
+  
+  foreach ($state_keys as $key) {
+    $state->delete($key);
+  }
+
+  \Drupal::messenger()->addMessage(
+    t('Strata Base module has been uninstalled. All base configurations and state data have been removed.')
+  );
+}
+
+/**
+ * Implements hook_schema().
+ */
+function strata_base_schema() {
+  $schema = [];
+
+  // Optional: Create a custom table for activity logs
+  $schema['strata_activity_log'] = [
+    'description' => 'Stores activity logs for Strata modules.',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique activity log ID.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'User ID who performed the activity.',
+      ],
+      'action' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The action performed.',
+      ],
+      'entity_type' => [
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+        'description' => 'The entity type involved.',
+      ],
+      'entity_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'description' => 'The entity ID involved.',
+      ],
+      'details' => [
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => FALSE,
+        'description' => 'Additional details in JSON format.',
+      ],
+      'ip_address' => [
+        'type' => 'varchar',
+        'length' => 45,
+        'not null' => FALSE,
+        'description' => 'IP address of the user.',
+      ],
+      'timestamp' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Unix timestamp of when the activity occurred.',
+      ],
+    ],
+    'primary key' => ['id'],
+    'indexes' => [
+      'uid' => ['uid'],
+      'action' => ['action'],
+      'entity_type_id' => ['entity_type', 'entity_id'],
+      'timestamp' => ['timestamp'],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Update function to initialize new statistics if needed.
+ */
+function strata_base_update_8001() {
+  $state = \Drupal::state();
+  
+  // Add any new state variables that might be needed
+  if (!$state->get('strata_base.stats.last_updated')) {
+    $state->set('strata_base.stats.last_updated', time());
+  }
+}

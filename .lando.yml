@@ -90,7 +90,7 @@ tooling:
     description: 'Install Drupal site'
     cmd:
       - drush si standard --db-url=mysql://drupal:drupal@database/strata_drupal --site-name="Strata Drupal Site" --account-name=admin --account-pass=admin --yes
-      - drush en strata_roles strata_tickets -y
+      - drush en strata_base strata_roles strata_tickets -y
       - drush cr
 
   # Enable modules
@@ -98,7 +98,7 @@ tooling:
     service: appserver
     description: 'Enable custom Strata modules'
     cmd:
-      - drush en strata_roles strata_tickets -y
+      - drush en strata_base strata_roles strata_tickets -y
       - drush cr
 
   # Export configuration

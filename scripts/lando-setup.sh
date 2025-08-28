@@ -22,6 +22,9 @@ lando install-site
 
 # Enable custom modules
 echo "🔧 Enabling custom Strata modules..."
+echo "   - strata_base (Base functionality)"
+echo "   - strata_roles (Role management)"
+echo "   - strata_tickets (Ticket system)"
 lando enable-modules
 
 # Set file permissions

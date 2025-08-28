@@ -1,0 +1,21 @@
+# General settings for Strata Base module
+timezone: 'America/Vancouver'
+date_format: 'Y-m-d H:i:s'
+enable_logging: true
+enable_notifications: true
+maintenance_mode: false
+
+# Dashboard settings
+dashboard_refresh_interval: 300  # 5 minutes in seconds
+show_statistics: true
+show_recent_activity: true
+
+# Email settings
+enable_email_notifications: false
+admin_email: ''
+notification_sender: ''
+
+# Security settings
+session_timeout: 3600  # 1 hour in seconds
+max_login_attempts: 5
+lockout_duration: 1800  # 30 minutes in seconds

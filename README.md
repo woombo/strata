@@ -82,13 +82,40 @@ This site uses Drupal's configuration management system:
 - **Import configuration:** `drush config:import`
 - **Configuration directory:** `config/sync/`
 
+### Strata Modules
+
+The system includes several custom modules:
+
+#### 1. Strata Base (`strata_base`)
+Foundation module providing:
+- Common services and utilities
+- Role management helpers
+- Building information management  
+- Notification system
+- Constants and helper functions
+
+#### 2. Strata Roles (`strata_roles`)
+Role management system with 5 roles:
+- **Admin**: Full system control
+- **Manager**: Day-to-day management
+- **Council**: Meeting and communication management
+- **Staff**: Maintenance and support
+- **Resident**: Basic access and ticket submission
+
+#### 3. Strata Tickets (`strata_tickets`)
+Comprehensive ticketing system with 3 bundles:
+- **Complain**: For issues and violations
+- **Request**: For maintenance and service requests
+- **Comments**: For general feedback and discussions
+
 ### Custom Entities
 
-All custom entities should be defined in code using:
+All custom entities are defined in code using:
 
 1. **Custom modules** in `web/modules/custom/`
 2. **Configuration YAML files** in module config directories
 3. **Entity definitions** as PHP classes
+4. **Base module dependencies** for common functionality
 
 ### Directory Structure
 

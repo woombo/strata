@@ -1,0 +1,155 @@
+<?php
+
+/**
+ * @file
+ * Contains strata_base.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\strata_base\Utility\StrataConstants;
+
+/**
+ * Implements hook_help().
+ */
+function strata_base_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.strata_base':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Strata Base module provides common functionality, utilities, and services for all Strata modules.') . '</p>';
+      $output .= '<h3>' . t('Features') . '</h3>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Common utility services for role management and permissions') . '</li>';
+      $output .= '<li>' . t('Building information management') . '</li>';
+      $output .= '<li>' . t('Notification and logging services') . '</li>';
+      $output .= '<li>' . t('Constants and helper functions') . '</li>';
+      $output .= '<li>' . t('Base configurations for all Strata modules') . '</li>';
+      $output .= '</ul>';
+      return $output;
+  }
+}
+
+/**
+ * Helper function to get the Strata utility service.
+ *
+ * @return \Drupal\strata_base\Service\StrataUtilityService
+ *   The utility service.
+ */
+function strata_base_utility() {
+  return \Drupal::service('strata_base.utility');
+}
+
+/**
+ * Helper function to get the Strata notification service.
+ *
+ * @return \Drupal\strata_base\Service\StrataNotificationService
+ *   The notification service.
+ */
+function strata_base_notification() {
+  return \Drupal::service('strata_base.notification');
+}
+
+/**
+ * Helper function to get the Strata building info service.
+ *
+ * @return \Drupal\strata_base\Service\StrataBuildingInfoService
+ *   The building info service.
+ */
+function strata_base_building_info() {
+  return \Drupal::service('strata_base.building_info');
+}
+
+/**
+ * Helper function to get the Strata permission helper.
+ *
+ * @return \Drupal\strata_base\Service\StrataPermissionHelper
+ *   The permission helper service.
+ */
+function strata_base_permission_helper() {
+  return \Drupal::service('strata_base.permission_helper');
+}
+
+/**
+ * Helper function to check if user has any Strata role.
+ *
+ * @param \Drupal\Core\Session\AccountInterface|null $account
+ *   The user account, or NULL for current user.
+ *
+ * @return bool
+ *   TRUE if user has any Strata role.
+ */
+function strata_base_user_has_role($account = NULL) {
+  return strata_base_utility()->userHasStrataRole($account);
+}
+
+/**
+ * Helper function to get user's primary Strata role.
+ *
+ * @param \Drupal\Core\Session\AccountInterface|null $account
+ *   The user account, or NULL for current user.
+ *
+ * @return string|null
+ *   The role ID, or NULL if none found.
+ */
+function strata_base_get_user_role($account = NULL) {
+  return strata_base_utility()->getUserPrimaryStrataRole($account);
+}
+
+/**
+ * Helper function to get user's Strata role label.
+ *
+ * @param \Drupal\Core\Session\AccountInterface|null $account
+ *   The user account, or NULL for current user.
+ *
+ * @return string|null
+ *   The role label, or NULL if none found.
+ */
+function strata_base_get_user_role_label($account = NULL) {
+  return strata_base_utility()->getUserStrataRoleLabel($account);
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function strata_base_user_login($account) {
+  // Log user login for Strata users
+  if (strata_base_user_has_role($account)) {
+    $role = strata_base_get_user_role_label($account);
+    strata_base_utility()->logActivity("User login: {$account->getAccountName()} ($role)");
+  }
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function strata_base_preprocess_page(&$variables) {
+  // Add Strata-specific variables to page template
+  $current_user = \Drupal::currentUser();
+  
+  if (strata_base_user_has_role()) {
+    $variables['strata_user_role'] = strata_base_get_user_role();
+    $variables['strata_user_role_label'] = strata_base_get_user_role_label();
+    $variables['strata_building_name'] = strata_base_building_info()->getBuildingInfoValue('name');
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function strata_base_theme() {
+  return [
+    'strata_dashboard' => [
+      'variables' => [
+        'building_info' => [],
+        'user_info' => [],
+        'statistics' => [],
+        'recent_activity' => [],
+      ],
+    ],
+    'strata_building_info' => [
+      'variables' => [
+        'building_info' => [],
+      ],
+    ],
+  ];
+}

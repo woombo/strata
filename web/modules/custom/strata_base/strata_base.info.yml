@@ -1,0 +1,13 @@
+name: 'Strata Base'
+type: module
+description: 'Base module providing common functionality, utilities, and services for all Strata modules'
+package: Strata
+version: 1.0.0
+core_version_requirement: ^11
+dependencies:
+  - drupal:user
+  - drupal:system
+  - drupal:field
+  - drupal:text
+  - drupal:datetime
+  - drupal:options

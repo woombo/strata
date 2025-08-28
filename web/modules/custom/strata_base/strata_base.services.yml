@@ -1,0 +1,18 @@
+# Services for Strata Base module
+
+services:
+  strata_base.utility:
+    class: Drupal\strata_base\Service\StrataUtilityService
+    arguments: ['@entity_type.manager', '@current_user', '@logger.factory']
+
+  strata_base.notification:
+    class: Drupal\strata_base\Service\StrataNotificationService
+    arguments: ['@messenger', '@logger.factory', '@current_user']
+
+  strata_base.building_info:
+    class: Drupal\strata_base\Service\StrataBuildingInfoService
+    arguments: ['@config.factory', '@state']
+
+  strata_base.permission_helper:
+    class: Drupal\strata_base\Service\StrataPermissionHelper
+    arguments: ['@current_user', '@entity_type.manager']

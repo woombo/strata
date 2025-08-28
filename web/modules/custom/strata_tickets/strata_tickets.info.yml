@@ -11,4 +11,5 @@ dependencies:
   - drupal:text
   - drupal:datetime
   - drupal:options
+  - strata:strata_base
   - strata:strata_roles
